@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -27,6 +28,7 @@ export default function DonatePage() {
     setRecommendations([]);
     setSelectedNgoId(null);
     setDonationData(data); // Store donation data
+    setShowRecommendations(true); // Show recommendation section immediately to display loader
 
     try {
       // Add placeholder IDs and image URLs to recommendations for UI
@@ -38,15 +40,16 @@ export default function DonatePage() {
         dataAiHint: `ngo charity ${ngo.name.split(" ")[0].toLowerCase()}`, // Basic AI hint
       }));
       setRecommendations(enhancedRecommendations);
-      setShowRecommendations(true);
     } catch (err) {
       console.error("Error fetching recommendations:", err);
-      setError("Failed to fetch NGO recommendations. Please try again.");
+      const errorMessage = "Failed to fetch NGO recommendations. Please check your setup or try again later.";
+      setError(errorMessage);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Could not fetch NGO recommendations.",
+        description: "Could not fetch NGO recommendations. Please check your setup or try again later.",
       });
+      setRecommendations([]); // Ensure recommendations are cleared on error
     } finally {
       setIsLoadingRecommendations(false);
     }
@@ -80,8 +83,6 @@ export default function DonatePage() {
     setRecommendations([]);
     setSelectedNgoId(null);
     setDonationData(null);
-    // Ideally, navigate to history page or show success message
-    // For now, just reset the form area.
     setIsSubmittingDonation(false);
   };
 
@@ -90,9 +91,9 @@ export default function DonatePage() {
     setRecommendations([]);
     setSelectedNgoId(null);
     setError(null);
-    // Here you might want to reset the DonationForm's internal state if it were a controlled component fully managed here.
-    // Since DonationForm uses react-hook-form, its state is internal. To reset it, we'd need to pass a key or a reset function.
-    // For simplicity, we're just hiding recommendations. A full reset might involve re-instantiating DonationForm with a new key.
+    setDonationData(null);
+    // To reset DonationForm, you might need a key prop on it or expose a reset method via ref.
+    // For now, just hiding recommendations and clearing data.
   };
 
   return (
@@ -106,7 +107,9 @@ export default function DonatePage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
-            {!showRecommendations ? (
+            {!showRecommendations || (isLoadingRecommendations && recommendations.length === 0 && !error) ? (
+              // Show form if not showing recommendations OR if loading initial recommendations without error
+              // This also covers the case where resetFormAndRecommendations is called
               <DonationForm onSubmit={handleFormSubmit} isLoading={isLoadingRecommendations} />
             ) : (
               <div>
@@ -118,14 +121,21 @@ export default function DonatePage() {
                   </AlertDescription>
                 </Alert>
 
-                {error && (
+                {isLoadingRecommendations && (
+                  <div className="flex justify-center items-center py-8">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <p className="ml-2">Loading recommendations...</p>
+                  </div>
+                )}
+
+                {error && !isLoadingRecommendations && (
                   <Alert variant="destructive" className="mb-4">
                     <AlertTitle>Error</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
                 )}
 
-                {recommendations.length > 0 ? (
+                {!isLoadingRecommendations && !error && recommendations.length > 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     {recommendations.map((ngo) => (
                       <NgoCard
@@ -136,19 +146,21 @@ export default function DonatePage() {
                       />
                     ))}
                   </div>
-                ) : (
+                )}
+                
+                {!isLoadingRecommendations && !error && recommendations.length === 0 && (
                   <p className="text-center text-muted-foreground py-8">
                     No suitable NGOs found for your specific donation criteria at the moment. You can try adjusting the details.
                   </p>
                 )}
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-end pt-4 border-t">
-                  <Button variant="outline" onClick={resetFormAndRecommendations} disabled={isSubmittingDonation}>
+                  <Button variant="outline" onClick={resetFormAndRecommendations} disabled={isSubmittingDonation || isLoadingRecommendations}>
                     <RotateCcw className="mr-2 h-4 w-4" /> Modify Donation
                   </Button>
                   <Button 
                     onClick={confirmDonation} 
-                    disabled={!selectedNgoId || isSubmittingDonation || recommendations.length === 0}
+                    disabled={!selectedNgoId || isSubmittingDonation || isLoadingRecommendations || recommendations.length === 0 || !!error}
                     className="bg-accent hover:bg-accent/90 text-accent-foreground"
                   >
                     {isSubmittingDonation ? (
@@ -167,3 +179,5 @@ export default function DonatePage() {
     </AppShell>
   );
 }
+
+    

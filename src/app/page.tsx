@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { FeastForBeastsLogo } from '@/components/icons/logo';
 import Image from 'next/image';
 import { HandHeart, Users, Award } from 'lucide-react';
+import { APP_NAME } from '@/lib/constants';
 
 export default function HomePage() {
   return (

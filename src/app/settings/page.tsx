@@ -1,41 +1,76 @@
+
+"use client";
+
+import { useState, useEffect, type FormEvent } from "react";
 import { AppShell } from "@/components/layout/app-shell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import { UserCircle, Bell, Lock } from "lucide-react";
+import { UserCircle, Bell, Lock, Loader2 } from "lucide-react";
+import { useProfile } from "@/contexts/profile-context";
+import { toast } from "@/hooks/use-toast";
 
 export default function SettingsPage() {
+  const { profile, updateProfile } = useProfile();
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [phone, setPhone] = useState(profile.phone || "");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setName(profile.name);
+    setEmail(profile.email);
+    setPhone(profile.phone || "");
+  }, [profile]);
+
+  const handleProfileSave = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    updateProfile({ name, email, phone });
+    setIsLoading(false);
+    toast({
+      title: "Profile Updated",
+      description: "Your profile information has been saved.",
+    });
+  };
+
   return (
     <AppShell>
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold tracking-tight text-foreground mb-8">Settings</h1>
 
-        <Card className="mb-8 shadow-md">
-          <CardHeader>
-            <CardTitle className="flex items-center"><UserCircle className="mr-2 h-5 w-5 text-primary" /> Profile Information</CardTitle>
-            <CardDescription>Update your personal details.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" defaultValue="Donor User" />
+        <form onSubmit={handleProfileSave}>
+          <Card className="mb-8 shadow-md">
+            <CardHeader>
+              <CardTitle className="flex items-center"><UserCircle className="mr-2 h-5 w-5 text-primary" /> Profile Information</CardTitle>
+              <CardDescription>Update your personal details.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} disabled={isLoading} />
+                </div>
+                <div>
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoading} />
+                </div>
               </div>
               <div>
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" defaultValue="donor@example.com" />
+                <Label htmlFor="phone">Phone Number (Optional)</Label>
+                <Input id="phone" type="tel" placeholder="Enter your phone number" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={isLoading} />
               </div>
-            </div>
-            <div>
-              <Label htmlFor="phone">Phone Number (Optional)</Label>
-              <Input id="phone" type="tel" placeholder="Enter your phone number" />
-            </div>
-            <Button>Save Profile</Button>
-          </CardContent>
-        </Card>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Save Profile
+              </Button>
+            </CardContent>
+          </Card>
+        </form>
 
         <Card className="mb-8 shadow-md">
           <CardHeader>
@@ -44,16 +79,8 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-                <Button variant="outline">Change Password</Button>
+                <Button variant="outline" disabled>Change Password</Button> 
             </div>
-            {/* Placeholder for 2FA if needed */}
-            {/* <div className="flex items-center justify-between rounded-lg border p-4">
-              <div>
-                <Label htmlFor="two-factor" className="font-semibold">Two-Factor Authentication</Label>
-                <p className="text-sm text-muted-foreground">Add an extra layer of security to your account.</p>
-              </div>
-              <Switch id="two-factor" />
-            </div> */}
           </CardContent>
         </Card>
         
@@ -77,7 +104,7 @@ export default function SettingsPage() {
               </div>
               <Switch id="sms-notifications" />
             </div>
-             <Button>Save Notification Preferences</Button>
+             <Button disabled>Save Notification Preferences</Button>
           </CardContent>
         </Card>
       </div>

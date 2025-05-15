@@ -12,7 +12,7 @@ import Link from "next/link";
 const userProfile = {
   name: "Donor User",
   email: "donor@example.com",
-  avatarUrl: "", // Let placeholder generate
+  avatarUrl: "/images/user-avatar.jpg", // Updated path
   role: "Donor",
   joinDate: "2023-01-15",
   totalDonations: 27,
@@ -34,7 +34,7 @@ export default function ProfilePage() {
           <div className="bg-gradient-to-br from-primary/20 via-background to-accent/20 p-6 md:p-8">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <Avatar className="h-24 w-24 md:h-32 md:w-32 border-4 border-background shadow-lg">
-                <AvatarImage src={userProfile.avatarUrl || `https://placehold.co/128x128.png`} alt={userProfile.name} data-ai-hint="person avatar" />
+                <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="user avatar" />
                 <AvatarFallback className="text-4xl">{initials}</AvatarFallback>
               </Avatar>
               <div className="text-center md:text-left">

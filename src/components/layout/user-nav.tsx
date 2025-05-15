@@ -17,7 +17,7 @@ import { UserCircle } from 'lucide-react';
 
 export function UserNav() {
   // Placeholder for user data - replace with actual auth state
-  const user = { name: "Donor User", email: "donor@example.com", avatarUrl: "" };
+  const user = { name: "Donor User", email: "donor@example.com", avatarUrl: "/images/user-avatar.jpg" }; // Updated path
   const initials = user.name?.split(" ").map(n => n[0]).join("") || "DU";
 
   return (
@@ -25,7 +25,7 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-9 w-9">
-            <AvatarImage src={user.avatarUrl || `https://placehold.co/40x40.png`} alt={user.name || "User"} data-ai-hint="person avatar" />
+            <AvatarImage src={user.avatarUrl} alt={user.name || "User"} data-ai-hint="user avatar" />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>

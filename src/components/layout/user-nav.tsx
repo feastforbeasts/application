@@ -14,10 +14,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { USER_PROFILE_NAV_ITEMS } from '@/lib/constants';
 import { UserCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation'; // Added
 
 export function UserNav() {
+  const router = useRouter(); // Added
   // Placeholder for user data - replace with actual auth state
-  const user = { name: "Donor User", email: "donor@example.com", avatarUrl: "/images/user-avatar.jpg" }; // Updated path
+  const user = { name: "Donor User", email: "donor@example.com", avatarUrl: "/images/user-avatar.jpg" };
   const initials = user.name?.split(" ").map(n => n[0]).join("") || "DU";
 
   return (
@@ -41,14 +43,30 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {USER_PROFILE_NAV_ITEMS.map((item) => (
-            <DropdownMenuItem key={item.href} asChild>
-              <Link href={item.href} className="flex items-center gap-2 cursor-pointer">
-                <item.icon className="h-4 w-4" />
-                <span>{item.title}</span>
-              </Link>
-            </DropdownMenuItem>
-          ))}
+          {USER_PROFILE_NAV_ITEMS.map((item) => {
+            // Special handling for logout to use router.push
+            if (item.title === 'Log out' && item.href === '/') {
+              return (
+                <DropdownMenuItem
+                  key={item.href}
+                  onSelect={() => router.push('/')} // Use onSelect to trigger navigation
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.title}</span>
+                </DropdownMenuItem>
+              );
+            }
+            // Default rendering for other items
+            return (
+              <DropdownMenuItem key={item.href} asChild>
+                <Link href={item.href} className="flex items-center gap-2 cursor-pointer">
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.title}</span>
+                </Link>
+              </DropdownMenuItem>
+            );
+          })}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

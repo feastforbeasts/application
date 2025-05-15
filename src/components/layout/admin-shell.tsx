@@ -1,3 +1,5 @@
+'use client';
+
 import {
   SidebarProvider,
   Sidebar,
@@ -8,17 +10,19 @@ import {
 } from '@/components/ui/sidebar';
 import { Header } from './header';
 import { AdminNav } from './admin-nav';
-import { APP_NAME } from '@/lib/constants';
 import { FeastForBeastsLogo, IconFeast } from '@/components/icons/logo';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation'; // Added
 
 type AdminShellProps = {
   children: React.ReactNode;
 };
 
 export function AdminShell({ children }: AdminShellProps) {
+  const router = useRouter(); // Added
+
   return (
     <SidebarProvider defaultOpen>
       <Sidebar collapsible="icon">
@@ -34,11 +38,13 @@ export function AdminShell({ children }: AdminShellProps) {
           <AdminNav />
         </SidebarContent>
          <SidebarFooter className="p-2">
-           <Button variant="ghost" asChild className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center">
-            <Link href="/">
-              <LogOut className="h-5 w-5 shrink-0" />
-              <span className="group-data-[collapsible=icon]:sr-only">Log Out</span>
-            </Link>
+           <Button
+            variant="ghost"
+            onClick={() => router.push('/')} // Modified
+            className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center"
+           >
+            <LogOut className="h-5 w-5 shrink-0" />
+            <span className="group-data-[collapsible=icon]:sr-only">Log Out</span>
            </Button>
         </SidebarFooter>
       </Sidebar>

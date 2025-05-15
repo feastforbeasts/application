@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { NGO } from "@/lib/types";
@@ -6,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 
 interface NgoCardProps {
   ngo: NGO;
-  onSelect: (ngoId: string) => void;
+  onSelect: (ngo: NGO) => void; // Changed to pass the full NGO object
   isSelected?: boolean;
 }
 
@@ -53,7 +54,7 @@ export function NgoCard({ ngo, onSelect, isSelected }: NgoCardProps) {
       </CardContent>
       <CardFooter>
         <Button 
-          onClick={() => onSelect(ngo.id || ngo.name)} 
+          onClick={() => onSelect(ngo)} // Pass the full NGO object
           className="w-full" 
           variant={isSelected ? "default" : "outline"}
         >

@@ -1,3 +1,6 @@
+
+"use client"; // Converted to client component
+
 import { AppShell } from "@/components/layout/app-shell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -5,21 +8,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, Download } from "lucide-react";
 import type { Donation } from "@/lib/types";
-
-const mockDonations: Donation[] = [
-  { id: "DON001", userId: "user1", foodType: "Cooked Rice & Curry", quantity: 5, quantityUnit: "kg", expiryDate: "2024-07-10", pickupLocation: "123 Main St, Anytown", status: "delivered", submittedAt: "2024-07-08T10:00:00Z", assignedNgoId: "ngo-foodlink" },
-  { id: "DON002", userId: "user1", foodType: "Canned Beans", quantity: 24, quantityUnit: "items", expiryDate: "2025-01-15", pickupLocation: "456 Oak Ave, Anytown", status: "picked_up", submittedAt: "2024-07-15T14:30:00Z", assignedNgoId: "ngo-community-kitchen" },
-  { id: "DON003", userId: "user1", foodType: "Fresh Bread", quantity: 10, quantityUnit: "items", expiryDate: "2024-07-25", pickupLocation: "789 Pine Ln, Anytown", status: "pending", submittedAt: "2024-07-22T09:15:00Z" },
-  { id: "DON004", userId: "user1", foodType: "Apples and Oranges", quantity: 15, quantityUnit: "kg", expiryDate: "2024-08-01", pickupLocation: "123 Main St, Anytown", status: "approved", submittedAt: "2024-07-23T11:00:00Z", assignedNgoId: "ngo-city-harvest" },
-];
+import { useDonations } from "@/contexts/donation-context"; // Added
+import Link from "next/link";
 
 const getStatusBadgeVariant = (status: Donation['status']) => {
   switch (status) {
-    case 'delivered': return 'default'; // Will be styled green
-    case 'picked_up': return 'secondary'; // Will be styled blue
-    case 'approved': return 'outline'; // Will be styled with accent
-    case 'pending': return 'destructive'; // Will be styled yellow/orange
-    case 'cancelled': return 'destructive'; // Will be styled red
+    case 'delivered': return 'default'; 
+    case 'picked_up': return 'secondary'; 
+    case 'approved': return 'outline'; 
+    case 'pending': return 'destructive'; 
+    case 'cancelled': return 'destructive'; 
     default: return 'secondary';
   }
 };
@@ -28,7 +26,7 @@ const getStatusBadgeColors = (status: Donation['status']) => {
     switch (status) {
       case 'delivered': return 'bg-green-100 text-green-800 border-green-300 dark:bg-green-900/50 dark:text-green-300 dark:border-green-700';
       case 'picked_up': return 'bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-700';
-      case 'approved': return 'bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-900/50 dark:text-yellow-300 dark:border-yellow-700'; // Changed from accent to yellow for better differentiation
+      case 'approved': return 'bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-900/50 dark:text-yellow-300 dark:border-yellow-700';
       case 'pending': return 'bg-orange-100 text-orange-800 border-orange-300 dark:bg-orange-900/50 dark:text-orange-300 dark:border-orange-700';
       case 'cancelled': return 'bg-red-100 text-red-800 border-red-300 dark:bg-red-900/50 dark:text-red-300 dark:border-red-700';
       default: return 'bg-gray-100 text-gray-800 border-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500';
@@ -37,6 +35,8 @@ const getStatusBadgeColors = (status: Donation['status']) => {
 
 
 export default function HistoryPage() {
+  const { donations } = useDonations(); // Use donations from context
+
   return (
     <AppShell>
       <div className="flex flex-col gap-6">
@@ -53,7 +53,7 @@ export default function HistoryPage() {
             <CardDescription>Review the details and status of all your previous donations.</CardDescription>
           </CardHeader>
           <CardContent>
-            {mockDonations.length > 0 ? (
+            {donations.length > 0 ? (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
@@ -61,19 +61,19 @@ export default function HistoryPage() {
                       <TableHead>ID</TableHead>
                       <TableHead>Food Type</TableHead>
                       <TableHead>Quantity</TableHead>
-                      <TableHead>Expiry Date</TableHead>
+                      <TableHead>NGO</TableHead> {/* Added NGO Name column */}
                       <TableHead>Status</TableHead>
                       <TableHead>Submitted On</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {mockDonations.map((donation) => (
+                    {donations.map((donation) => (
                       <TableRow key={donation.id} className="hover:bg-muted/50">
                         <TableCell className="font-medium">{donation.id}</TableCell>
                         <TableCell>{donation.foodType}</TableCell>
                         <TableCell>{donation.quantity} {donation.quantityUnit}</TableCell>
-                        <TableCell>{donation.expiryDate}</TableCell>
+                        <TableCell>{donation.ngoName || 'N/A'}</TableCell> {/* Display NGO Name */}
                         <TableCell>
                           <Badge variant={getStatusBadgeVariant(donation.status)} className={getStatusBadgeColors(donation.status)}>
                             {donation.status.charAt(0).toUpperCase() + donation.status.slice(1)}
@@ -81,7 +81,7 @@ export default function HistoryPage() {
                         </TableCell>
                         <TableCell>{new Date(donation.submittedAt).toLocaleDateString()}</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="ghost" size="icon" title="View Details">
+                          <Button variant="ghost" size="icon" title="View Details (placeholder)">
                             <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
                           </Button>
                         </TableCell>
@@ -94,8 +94,7 @@ export default function HistoryPage() {
               <div className="text-center py-12">
                 <p className="text-lg text-muted-foreground mb-4">You haven&apos;t made any donations yet.</p>
                 <Button asChild>
-                  {/* <Link href="/donate">Make Your First Donation</Link> */}
-                   <span>Make Your First Donation</span> {/* Placeholder, Link needs to be fixed for nested button */}
+                   <Link href="/donate">Make Your First Donation</Link>
                 </Button>
               </div>
             )}

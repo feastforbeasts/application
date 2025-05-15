@@ -11,7 +11,7 @@ export type User = {
 
 export type Donation = {
   id: string;
-  userId: string;
+  userId: string; // For a full app, this would link to the User
   foodType: string;
   quantity: number; // in kg or units
   quantityUnit: 'kg' | 'items';
@@ -21,12 +21,13 @@ export type Donation = {
   submittedAt: string; // ISO date string
   notes?: string;
   assignedNgoId?: string;
+  ngoName?: string; // Added to store NGO name directly for history
   assignedVolunteerId?: string;
 };
 
 // This is based on RecommendNGOsOutput from the AI flow
 export type NGO = {
-  id: string; // Add an ID for database storage
+  id: string; 
   name: string;
   suitabilityScore: number;
   urgencyScore: number;
@@ -50,7 +51,6 @@ export type Reward = {
   name: string;
   description: string;
   pointsRequired: number;
-  // imageUrl and dataAiHint removed
 };
 
 export type UserRewardRedemption = {
@@ -60,3 +60,4 @@ export type UserRewardRedemption = {
   redeemedAt: string; // ISO date string
   pointsSpent: number;
 };
+

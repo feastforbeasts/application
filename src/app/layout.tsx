@@ -4,7 +4,8 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { ProfileProvider } from '@/contexts/profile-context'; // Added
+import { ProfileProvider } from '@/contexts/profile-context';
+import { DonationProvider } from '@/contexts/donation-context'; // Added
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-        <ProfileProvider> {/* Added ProfileProvider */}
-          {children}
+        <ProfileProvider>
+          <DonationProvider> {/* Added DonationProvider */}
+            {children}
+          </DonationProvider>
         </ProfileProvider>
         <Toaster />
       </body>

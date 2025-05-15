@@ -31,13 +31,11 @@ export default function DonatePage() {
     setShowRecommendations(true); // Show recommendation section immediately to display loader
 
     try {
-      // Add placeholder IDs and image URLs to recommendations for UI
       const rawRecommendations = await recommendNGOs(data);
+      // Add pseudo-IDs for UI keying, but no image URLs
       const enhancedRecommendations = rawRecommendations.map((ngo, index) => ({
         ...ngo,
         id: ngo.name.toLowerCase().replace(/\s+/g, '-') + `-${index}`, // Create a pseudo-ID
-        imageUrl: `https://placehold.co/600x400.png`, // Placeholder image
-        dataAiHint: `ngo charity ${ngo.name.split(" ")[0].toLowerCase()}`, // Basic AI hint
       }));
       setRecommendations(enhancedRecommendations);
     } catch (err) {

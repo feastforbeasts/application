@@ -35,8 +35,6 @@ export type NGO = {
   // Additional fields
   operatingHours?: string;
   acceptedFoodTypes?: string[];
-  imageUrl?: string;
-  dataAiHint?: string;
 };
 
 export type Volunteer = {

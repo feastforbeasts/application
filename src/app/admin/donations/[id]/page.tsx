@@ -11,7 +11,6 @@ import { Loader2, User, MapPin, CalendarDays, Package, Info, Utensils, HandHeart
 import type { Donation, NGO as NgoType, Volunteer as VolunteerType } from "@/lib/types"; // Use NgoType to avoid conflict
 import { optimizeDonationAllocation, type OptimizeDonationAllocationInput, type OptimizeDonationAllocationOutput } from "@/ai/flows/optimize-donation-allocation";
 import { toast } from "@/hooks/use-toast";
-import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
@@ -24,9 +23,9 @@ const mockAdminDonations: (Donation & { userName: string; userEmail: string; ngo
 ];
 
 const mockNgos: NgoType[] = [
-    { id: "ngo-citypantry", name: "City Pantry", address: "456 Community Dr, Metro City", contactNumber: "555-0011", suitabilityScore: 0.8, urgencyScore: 0.7, imageUrl:"https://placehold.co/100x100.png", dataAiHint: "city building" },
-    { id: "ngo-greenearth", name: "Green Earth Initiative", address: "789 Nature Way, Eco Town", contactNumber: "555-0022", suitabilityScore: 0.9, urgencyScore: 0.6, imageUrl:"https://placehold.co/100x100.png", dataAiHint: "nature charity" },
-    { id: "ngo-hopekitchen", name: "Hope Kitchen", address: "101 Giving St, Unity Village", contactNumber: "555-0033", suitabilityScore: 0.7, urgencyScore: 0.9, imageUrl:"https://placehold.co/100x100.png", dataAiHint: "community kitchen" },
+    { id: "ngo-citypantry", name: "City Pantry", address: "456 Community Dr, Metro City", contactNumber: "555-0011", suitabilityScore: 0.8, urgencyScore: 0.7 },
+    { id: "ngo-greenearth", name: "Green Earth Initiative", address: "789 Nature Way, Eco Town", contactNumber: "555-0022", suitabilityScore: 0.9, urgencyScore: 0.6 },
+    { id: "ngo-hopekitchen", name: "Hope Kitchen", address: "101 Giving St, Unity Village", contactNumber: "555-0033", suitabilityScore: 0.7, urgencyScore: 0.9 },
 ];
 
 const mockVolunteers: (VolunteerType & { name: string, email: string })[] = [
@@ -84,8 +83,6 @@ export default function DonationDetailPage({ params }: { params: { id: string } 
       const enhancedResults = results.map((ngo, index) => ({
         ...ngo,
         id: ngo.name.toLowerCase().replace(/\s+/g, '-') + `-sug-${index}`, // Create a pseudo-ID
-        imageUrl: `https://placehold.co/80x80.png`, 
-        dataAiHint: `charity building ${ngo.name.split(" ")[0].toLowerCase()}`,
       }));
       setSuggestedNgos(enhancedResults);
       toast({ title: "NGO Suggestions Loaded", description: "Review the AI-powered recommendations below." });
@@ -182,21 +179,9 @@ export default function DonationDetailPage({ params }: { params: { id: string } 
                 <CardContent>
                     {assignedNgo ? (
                         <div className="flex items-start gap-4">
-                            {assignedNgo.imageUrl && (
-                                <Image 
-                                    src={assignedNgo.imageUrl} 
-                                    alt={assignedNgo.name} 
-                                    width={80} 
-                                    height={80} 
-                                    className="rounded-md object-cover"
-                                    data-ai-hint={assignedNgo.dataAiHint || "ngo building"}
-                                />
-                            )}
-                             {!assignedNgo.imageUrl && (
-                                <div className="h-20 w-20 bg-muted rounded-md flex items-center justify-center">
-                                    <Building className="h-10 w-10 text-muted-foreground" />
-                                </div>
-                            )}
+                            <div className="h-16 w-16 bg-muted rounded-md flex items-center justify-center flex-shrink-0">
+                                <Building className="h-8 w-8 text-muted-foreground" />
+                            </div>
                             <div>
                                 <p className="font-semibold text-lg">{assignedNgo.name}</p>
                                 <p className="text-sm text-muted-foreground">{assignedNgo.address}</p>
@@ -235,7 +220,7 @@ export default function DonationDetailPage({ params }: { params: { id: string } 
                                         <TableRow key={(ngo as NgoType).id || ngo.name}>
                                             <TableCell>
                                                 <div className="flex items-center gap-2">
-                                                    {(ngo as NgoType).imageUrl && <Image src={(ngo as NgoType).imageUrl!} alt={ngo.name} width={40} height={40} className="rounded-sm" data-ai-hint={(ngo as NgoType).dataAiHint || "charity building"} />}
+                                                     <Building className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                                                     <div>
                                                         <p className="font-medium">{ngo.name}</p>
                                                         <p className="text-xs text-muted-foreground">{ngo.address}</p>

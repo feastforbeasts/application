@@ -1,8 +1,7 @@
-import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { NGO } from "@/lib/types";
-import { MapPin, Phone, ShieldCheck, Flame } from "lucide-react";
+import { MapPin, Phone, ShieldCheck, Flame, Building } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface NgoCardProps {
@@ -18,18 +17,10 @@ export function NgoCard({ ngo, onSelect, isSelected }: NgoCardProps) {
   return (
     <Card className={`shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl ${isSelected ? 'ring-2 ring-primary' : 'ring-1 ring-border'}`}>
       <CardHeader className="pb-3">
-        {ngo.imageUrl && (
-          <div className="relative h-40 w-full mb-4 rounded-md overflow-hidden">
-            <Image
-              src={ngo.imageUrl}
-              alt={ngo.name}
-              layout="fill"
-              objectFit="cover"
-              data-ai-hint={ngo.dataAiHint || "ngo building"}
-            />
-          </div>
-        )}
-        <CardTitle className="text-xl font-semibold text-primary">{ngo.name}</CardTitle>
+        <div className="flex items-center gap-2 mb-2">
+          <Building className="h-8 w-8 text-primary flex-shrink-0" />
+          <CardTitle className="text-xl font-semibold text-primary">{ngo.name}</CardTitle>
+        </div>
         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <MapPin className="h-4 w-4" /> <span>{ngo.address}</span>
         </div>

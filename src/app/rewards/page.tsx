@@ -56,10 +56,10 @@ export default function RewardsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">My Rewards</h1>
           <Card className="w-full sm:w-auto bg-accent/20 border-accent shadow-md">
             <CardContent className="p-4 flex items-center gap-3">
-              <Star className="h-10 w-10 text-accent" />
+              <Star className="h-10 w-10 text-green-500 dark:text-green-400" />
               <div>
                 <p className="text-sm text-muted-foreground">Your Points Balance</p>
-                <p className="text-4xl font-bold text-accent">{userPoints} Points</p>
+                <p className="text-4xl font-bold text-green-600 dark:text-green-400">{userPoints} Points</p>
               </div>
             </CardContent>
           </Card>
@@ -87,7 +87,7 @@ export default function RewardsPage() {
                     buttonText = isAchievement ? "Achieved" : "Redeemed";
                     buttonDisabled = true;
                 } else if (isAchievement) {
-                    buttonText = "Unlock Achievement"; // Or "View Achievement" if already unlocked by default
+                    buttonText = "Unlock Achievement"; 
                 } else if (!canAfford) {
                     buttonText = "Redeem";
                     buttonDisabled = true;
@@ -103,7 +103,7 @@ export default function RewardsPage() {
                     <CardContent className="flex-grow" /> {/* Pushes footer to bottom */}
                     <CardFooter className="flex flex-col items-start gap-2 pt-4 border-t">
                        <div className="flex justify-between w-full items-center">
-                          <p className="text-sm font-semibold text-accent">
+                          <p className="text-sm font-semibold text-primary">
                               {reward.pointsRequired > 0 ? `${reward.pointsRequired} Points` : "Free"}
                           </p>
                           <Button 

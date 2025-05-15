@@ -48,11 +48,11 @@ export default function HomePage() {
                 </div>
               </div>
               <Image
-                src="/images/hero-cows.jpg" // Updated path
+                src="/images/hero-cows.jpg" 
                 alt="Cows feeding from a trough"
                 width={600}
                 height={400}
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square shadow-lg"
+                className="mx-auto aspect-[3/2] overflow-hidden rounded-xl object-cover sm:w-full lg:order-last shadow-lg"
                 data-ai-hint="cows feeding"
                 priority
               />

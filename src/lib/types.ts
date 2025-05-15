@@ -1,3 +1,4 @@
+
 export type User = {
   id: string;
   email?: string;
@@ -49,8 +50,7 @@ export type Reward = {
   name: string;
   description: string;
   pointsRequired: number;
-  imageUrl?: string;
-  dataAiHint?: string;
+  // imageUrl and dataAiHint removed
 };
 
 export type UserRewardRedemption = {

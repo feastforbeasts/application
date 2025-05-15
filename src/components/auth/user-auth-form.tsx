@@ -53,8 +53,8 @@ export function UserAuthForm({ className, mode, ...props }: UserAuthFormProps) {
       router.push("/dashboard");
     } else {
       toast({
-        title: "Registration Successful",
-        description: "Please check your email to verify your account.",
+        title: "Registration Successful (Simulated)",
+        description: "In a real app, an email would be sent to verify your account. Redirecting to login.",
       });
       router.push("/login");
     }

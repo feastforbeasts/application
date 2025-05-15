@@ -48,7 +48,7 @@ export default function HomePage() {
                 </div>
               </div>
               <Image
-                src="https://images.unsplash.com/photo-1589949940643-7273f0f999ea?w=600&h=400&fit=crop"
+                src="/images/hero-cows.jpg" // Updated path
                 alt="Cows feeding from a trough"
                 width={600}
                 height={400}

@@ -72,14 +72,16 @@ export default function HistoryPage() {
                         <TableCell>{donation.quantity} {donation.quantityUnit}</TableCell>
                         <TableCell>{donation.ngoName || 'N/A'}</TableCell> {/* Display NGO Name */}
                         <TableCell>
-                          <Badge variant={getStatusBadgeVariant(donation.status)} className={getStatusBadgeColors(donation.status)}>
-                            {donation.status.charAt(0).toUpperCase() + donation.status.slice(1)}
+                          <Badge variant={getStatusBadgeVariant(donation.status)} className={`capitalize ${getStatusBadgeColors(donation.status)}`}>
+                            {donation.status.replace("_", " ")}
                           </Badge>
                         </TableCell>
                         <TableCell>{new Date(donation.submittedAt).toLocaleDateString()}</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="ghost" size="icon" title="View Details (placeholder)">
-                            <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                          <Button asChild variant="ghost" size="icon" title="View Details">
+                            <Link href={`/history/${donation.id}`}>
+                              <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                            </Link>
                           </Button>
                         </TableCell></TableRow>
                     ))}

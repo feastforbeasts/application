@@ -2,18 +2,19 @@ import Link from "next/link";
 import { UserAuthForm } from "@/components/auth/user-auth-form";
 import { FeastForBeastsLogo } from "@/components/icons/logo";
 import { APP_NAME } from "@/lib/constants";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: "url('https://placehold.co/1200x800.png?text=Food+Donation')",
-            filter: 'brightness(0.7)' 
-          }}
-          data-ai-hint="food donation volunteers"
+        <Image
+          src="https://placehold.co/1200x800.png"
+          alt="Background image of food donation drive"
+          layout="fill"
+          objectFit="cover"
+          className="absolute inset-0 filter brightness-70"
+          data-ai-hint="food donation drive"
         />
         <div className="relative z-20 flex items-center text-lg font-medium">
           <FeastForBeastsLogo className="h-8 w-auto mr-2 filter brightness-0 invert" />

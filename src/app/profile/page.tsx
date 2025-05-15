@@ -3,7 +3,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge"; // Added Badge import
 import { StatCard } from "@/components/dashboard/stat-card";
 import { User, Mail, Edit3, Shield, Gift, Star, Trophy } from "lucide-react";
 import Link from "next/link";
@@ -34,7 +34,7 @@ export default function ProfilePage() {
           <div className="bg-gradient-to-br from-primary/20 via-background to-accent/20 p-6 md:p-8">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <Avatar className="h-24 w-24 md:h-32 md:w-32 border-4 border-background shadow-lg">
-                <AvatarImage src={userProfile.avatarUrl || `https://placehold.co/128x128.png?text=${initials}`} alt={userProfile.name} data-ai-hint="user avatar" />
+                <AvatarImage src={userProfile.avatarUrl || `https://placehold.co/128x128.png`} alt={userProfile.name} data-ai-hint="person avatar" />
                 <AvatarFallback className="text-4xl">{initials}</AvatarFallback>
               </Avatar>
               <div className="text-center md:text-left">

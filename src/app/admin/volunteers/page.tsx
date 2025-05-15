@@ -15,13 +15,14 @@ interface MockVolunteer extends Volunteer {
   status: "active" | "inactive" | "pending_verification";
   avatarUrl?: string;
   totalPickups: number;
+  dataAiHint?: string; // Added for avatar AI hint
 }
 
 const mockVolunteers: MockVolunteer[] = [
-  { id: "VOL001", userId: "userV1", name: "Jane Doe", email: "jane.doe@example.com", phone: "555-1234", availability: "Weekends, Mon Evenings", assignedTasks: ["DON103 Pickup"], status: "active", avatarUrl: "https://placehold.co/40x40.png", totalPickups: 15, dataAiHint:"volunteer portrait" },
-  { id: "VOL002", userId: "userV2", name: "John Smith", email: "john.smith@example.com", phone: "555-5678", availability: "Weekdays 9am-5pm", assignedTasks: [], status: "active", totalPickups: 22 },
-  { id: "VOL003", userId: "userV3", name: "Emily White", email: "emily.white@example.com", phone: "555-8765", availability: "Flexible", assignedTasks: [], status: "inactive", totalPickups: 5 },
-  { id: "VOL004", userId: "userV4", name: "Michael Brown", email: "michael.brown@example.com", phone: "555-4321", availability: "Sat AM", assignedTasks: [], status: "pending_verification", totalPickups: 0 },
+  { id: "VOL001", userId: "userV1", name: "Jane Doe", email: "jane.doe@example.com", phone: "555-1234", availability: "Weekends, Mon Evenings", assignedTasks: ["DON103 Pickup"], status: "active", avatarUrl: "https://placehold.co/40x40.png", totalPickups: 15, dataAiHint:"woman portrait" },
+  { id: "VOL002", userId: "userV2", name: "John Smith", email: "john.smith@example.com", phone: "555-5678", availability: "Weekdays 9am-5pm", assignedTasks: [], status: "active", totalPickups: 22, dataAiHint:"man portrait" },
+  { id: "VOL003", userId: "userV3", name: "Emily White", email: "emily.white@example.com", phone: "555-8765", availability: "Flexible", assignedTasks: [], status: "inactive", totalPickups: 5, dataAiHint:"person smiling" },
+  { id: "VOL004", userId: "userV4", name: "Michael Brown", email: "michael.brown@example.com", phone: "555-4321", availability: "Sat AM", assignedTasks: [], status: "pending_verification", totalPickups: 0, dataAiHint:"volunteer photo" },
 ];
 
 export default function ManageVolunteersPage() {
@@ -66,7 +67,7 @@ export default function ManageVolunteersPage() {
                       <TableCell>
                         <div className="flex items-center gap-3">
                           <Avatar className="h-9 w-9">
-                            <AvatarImage src={volunteer.avatarUrl || `https://placehold.co/40x40.png?text=${volunteer.name.charAt(0)}`} alt={volunteer.name} data-ai-hint={volunteer.dataAiHint || "person photo"} />
+                            <AvatarImage src={volunteer.avatarUrl || `https://placehold.co/40x40.png`} alt={volunteer.name} data-ai-hint={volunteer.dataAiHint || "person photo"} />
                             <AvatarFallback>{volunteer.name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
                           </Avatar>
                           <div className="font-medium">{volunteer.name}</div>

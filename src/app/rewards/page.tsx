@@ -6,10 +6,10 @@ import Image from "next/image";
 import type { Reward } from "@/lib/types";
 
 const mockRewards: Reward[] = [
-  { id: "REW001", name: "Eco Warrior Badge", description: "Awarded for 5 successful donations.", pointsRequired: 0, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "badge award" },
-  { id: "REW002", name: "$5 Coffee Voucher", description: "Redeemable at local partner cafes.", pointsRequired: 500, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "coffee voucher" },
+  { id: "REW001", name: "Eco Warrior Badge", description: "Awarded for 5 successful donations.", pointsRequired: 0, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "eco badge" },
+  { id: "REW002", name: "$5 Coffee Voucher", description: "Redeemable at local partner cafes.", pointsRequired: 500, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "coffee giftcard" },
   { id: "REW003", name: "Plant a Tree Certificate", description: "We'll plant a tree in your name.", pointsRequired: 1000, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "tree certificate" },
-  { id: "REW004", name: "Reusable Shopping Bag", description: "A stylish FeastForBeasts shopping bag.", pointsRequired: 250, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "shopping bag" },
+  { id: "REW004", name: "Reusable Shopping Bag", description: "A stylish FeastForBeasts shopping bag.", pointsRequired: 250, imageUrl: "https://placehold.co/300x200.png", dataAiHint: "tote bag" },
 ];
 
 const currentUserPoints = 750; // Placeholder
@@ -90,6 +90,11 @@ export default function RewardsPage() {
             <Card className="shadow-md">
                 <CardContent className="p-6 text-center text-muted-foreground">
                     <p>You haven&apos;t redeemed any rewards yet.</p>
+                     {/* Example of a redeemed item - can be populated dynamically later */}
+                    {/* <div className="mt-4 p-4 border rounded-md bg-secondary/30">
+                        <p className="font-semibold">Redeemed: $5 Coffee Voucher</p>
+                        <p className="text-xs text-muted-foreground">On: July 1, 2024 for 500 Points</p>
+                    </div> */}
                 </CardContent>
             </Card>
         </div>

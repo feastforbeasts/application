@@ -17,24 +17,42 @@ export default function SettingsPage() {
   const [name, setName] = useState(profile.name);
   const [email, setEmail] = useState(profile.email);
   const [phone, setPhone] = useState(profile.phone || "");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(false);
+
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [smsNotifications, setSmsNotifications] = useState(false);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
 
   useEffect(() => {
     setName(profile.name);
     setEmail(profile.email);
     setPhone(profile.phone || "");
+    // In a real app, you'd load these preferences from user settings
+    // For now, we'll use default values or what's stored in local state.
   }, [profile]);
 
   const handleProfileSave = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsLoadingProfile(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     updateProfile({ name, email, phone });
-    setIsLoading(false);
+    setIsLoadingProfile(false);
     toast({
       title: "Profile Updated",
       description: "Your profile information has been saved.",
+    });
+  };
+
+  const handleNotificationSave = async () => {
+    setIsLoadingNotifications(true);
+    // Simulate API call to save notification preferences
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // In a real app, you would save emailNotifications and smsNotifications states
+    setIsLoadingNotifications(false);
+    toast({
+      title: "Notification Preferences Saved",
+      description: "Your notification settings have been updated.",
     });
   };
 
@@ -53,19 +71,19 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} disabled={isLoading} />
+                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} disabled={isLoadingProfile} />
                 </div>
                 <div>
                   <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoading} />
+                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoadingProfile} />
                 </div>
               </div>
               <div>
                 <Label htmlFor="phone">Phone Number (Optional)</Label>
-                <Input id="phone" type="tel" placeholder="Enter your phone number" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={isLoading} />
+                <Input id="phone" type="tel" placeholder="Enter your phone number" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={isLoadingProfile} />
               </div>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" disabled={isLoadingProfile}>
+                {isLoadingProfile && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Save Profile
               </Button>
             </CardContent>
@@ -95,16 +113,29 @@ export default function SettingsPage() {
                 <Label htmlFor="email-notifications" className="font-semibold">Email Notifications</Label>
                 <p className="text-sm text-muted-foreground">Receive updates about your donations and rewards via email.</p>
               </div>
-              <Switch id="email-notifications" defaultChecked />
+              <Switch 
+                id="email-notifications" 
+                checked={emailNotifications}
+                onCheckedChange={setEmailNotifications}
+                disabled={isLoadingNotifications}
+              />
             </div>
             <div className="flex items-center justify-between rounded-lg border p-4">
               <div>
                 <Label htmlFor="sms-notifications" className="font-semibold">SMS Notifications</Label>
                 <p className="text-sm text-muted-foreground">Get important alerts via text message (if phone provided).</p>
               </div>
-              <Switch id="sms-notifications" />
+              <Switch 
+                id="sms-notifications" 
+                checked={smsNotifications}
+                onCheckedChange={setSmsNotifications}
+                disabled={isLoadingNotifications || !profile.phone} // Disable if no phone
+              />
             </div>
-             <Button disabled>Save Notification Preferences</Button>
+             <Button onClick={handleNotificationSave} disabled={isLoadingNotifications}>
+                {isLoadingNotifications && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Save Notification Preferences
+            </Button>
           </CardContent>
         </Card>
       </div>

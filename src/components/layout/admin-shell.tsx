@@ -34,9 +34,11 @@ export function AdminShell({ children }: AdminShellProps) {
           <AdminNav />
         </SidebarContent>
          <SidebarFooter className="p-2">
-           <Button variant="ghost" className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center">
-             <LogOut className="h-5 w-5 shrink-0" />
-             <span className="group-data-[collapsible=icon]:sr-only">Log Out</span>
+           <Button variant="ghost" asChild className="w-full justify-start gap-2 group-data-[collapsible=icon]:justify-center">
+            <Link href="/">
+              <LogOut className="h-5 w-5 shrink-0" />
+              <span className="group-data-[collapsible=icon]:sr-only">Log Out</span>
+            </Link>
            </Button>
         </SidebarFooter>
       </Sidebar>

@@ -31,7 +31,7 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
 export const USER_PROFILE_NAV_ITEMS: NavItem[] = [
     { title: 'Profile', href: '/profile', icon: UserCircle },
     { title: 'Settings', href: '/settings', icon: Settings },
-    { title: 'Log out', href: '/api/auth/logout', icon: LogOut }, // Placeholder for actual logout
+    { title: 'Log out', href: '/', icon: LogOut }, 
 ]
 
 export const DONATION_TYPES = [

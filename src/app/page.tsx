@@ -48,7 +48,7 @@ export default function HomePage() {
                 </div>
               </div>
               <Image
-                src="/images/hero-cows.jpg"
+                src="/images/istockphoto-875237010-612x612.jpg"
                 alt="Cows feeding from a trough"
                 width={600}
                 height={400}

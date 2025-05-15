@@ -12,8 +12,10 @@ import { Loader2, Send, RotateCcw, Lightbulb, CheckCircle } from "lucide-react";
 import { recommendNGOs, type RecommendNGOsInput, type RecommendNGOsOutput } from "@/ai/flows/recommend-ngos";
 import type { NGO } from "@/lib/types"; // Use our extended NGO type
 import { toast } from "@/hooks/use-toast";
+import { useProfile } from "@/contexts/profile-context"; // Added
 
 export default function DonatePage() {
+  const { profile } = useProfile(); // Added
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [recommendations, setRecommendations] = useState<NGO[]>([]);
   const [selectedNgoId, setSelectedNgoId] = useState<string | null>(null);
@@ -32,7 +34,7 @@ export default function DonatePage() {
 
     try {
       const rawRecommendations = await recommendNGOs(data);
-      // Add pseudo-IDs for UI keying, but no image URLs
+      // Add pseudo-IDs for UI keying
       const enhancedRecommendations = rawRecommendations.map((ngo, index) => ({
         ...ngo,
         id: ngo.name.toLowerCase().replace(/\s+/g, '-') + `-${index}`, // Create a pseudo-ID
@@ -72,7 +74,7 @@ export default function DonatePage() {
     
     toast({
       title: "Donation Submitted!",
-      description: `Your donation of ${donationData.donationType} has been scheduled with the selected NGO.`,
+      description: `Your donation of ${donationData.donationType} has been scheduled with the selected NGO. In a real application, a confirmation email would be sent to ${profile.email}.`, // Updated description
       action: <CheckCircle className="text-green-500" />,
     });
     

@@ -208,17 +208,11 @@ export default function DonationDetailPage({ params }: { params: { id: string } 
                              <div className="overflow-x-auto">
                                 <Table>
                                     <TableHeader>
-                                        <TableRow>
-                                            <TableHead>NGO</TableHead>
-                                            <TableHead>Suitability</TableHead>
-                                            <TableHead>Urgency</TableHead>
-                                            <TableHead>Actions</TableHead>
-                                        </TableRow>
+                                        <TableRow><TableHead>NGO</TableHead><TableHead>Suitability</TableHead><TableHead>Urgency</TableHead><TableHead>Actions</TableHead></TableRow>
                                     </TableHeader>
                                     <TableBody>
                                     {suggestedNgos.map(ngo => (
-                                        <TableRow key={(ngo as NgoType).id || ngo.name}>
-                                            <TableCell>
+                                        <TableRow key={(ngo as NgoType).id || ngo.name}><TableCell>
                                                 <div className="flex items-center gap-2">
                                                      <Building className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                                                     <div>
@@ -226,19 +220,15 @@ export default function DonationDetailPage({ params }: { params: { id: string } 
                                                         <p className="text-xs text-muted-foreground">{ngo.address}</p>
                                                     </div>
                                                 </div>
-                                            </TableCell>
-                                            <TableCell>
+                                            </TableCell><TableCell>
                                                 <Progress value={ngo.suitabilityScore * 100} className="h-2 w-20" />
                                                 <span className="text-xs">{(ngo.suitabilityScore*100).toFixed(0)}%</span>
-                                            </TableCell>
-                                            <TableCell>
+                                            </TableCell><TableCell>
                                                 <Progress value={ngo.urgencyScore * 100} className="h-2 w-20" />
                                                 <span className="text-xs">{(ngo.urgencyScore*100).toFixed(0)}%</span>
-                                            </TableCell>
-                                            <TableCell>
+                                            </TableCell><TableCell>
                                                 <Button size="sm" onClick={() => handleAssignNgo(ngo as unknown as NgoType)}>Assign</Button>
-                                            </TableCell>
-                                        </TableRow>
+                                            </TableCell></TableRow>
                                     ))}
                                     </TableBody>
                                 </Table>

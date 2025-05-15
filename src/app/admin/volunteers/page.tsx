@@ -1,3 +1,4 @@
+
 import { AdminShell } from "@/components/layout/admin-shell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -52,19 +53,11 @@ export default function ManageVolunteersPage() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Volunteer</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Availability</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Pickups</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
+                  <TableRow><TableHead>Volunteer</TableHead><TableHead>Contact</TableHead><TableHead>Availability</TableHead><TableHead>Status</TableHead><TableHead>Pickups</TableHead><TableHead className="text-right">Actions</TableHead></TableRow>
                 </TableHeader>
                 <TableBody>
                   {mockVolunteers.map((volunteer) => (
-                    <TableRow key={volunteer.id} className="hover:bg-muted/50">
-                      <TableCell>
+                    <TableRow key={volunteer.id} className="hover:bg-muted/50"><TableCell>
                         <div className="flex items-center gap-3">
                           <Avatar className="h-9 w-9">
                             <AvatarImage src={volunteer.avatarUrl || `https://placehold.co/40x40.png`} alt={volunteer.name} data-ai-hint={volunteer.dataAiHint || "person photo"} />
@@ -72,28 +65,22 @@ export default function ManageVolunteersPage() {
                           </Avatar>
                           <div className="font-medium">{volunteer.name}</div>
                         </div>
-                      </TableCell>
-                      <TableCell>
+                      </TableCell><TableCell>
                         <div className="flex flex-col text-sm">
                             <span className="flex items-center gap-1 text-muted-foreground"><Mail className="h-3 w-3"/> {volunteer.email}</span>
                             <span className="flex items-center gap-1 text-muted-foreground"><Phone className="h-3 w-3"/> {volunteer.phone}</span>
                         </div>
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">{volunteer.availability}</TableCell>
-                      <TableCell>
+                      </TableCell><TableCell className="text-sm text-muted-foreground">{volunteer.availability}</TableCell><TableCell>
                         <Badge variant={volunteer.status === "active" ? "default" : volunteer.status === "pending_verification" ? "outline" : "secondary"}
                                className={volunteer.status === "active" ? "bg-green-100 text-green-700" : volunteer.status === "pending_verification" ? "bg-yellow-100 text-yellow-700" : "bg-slate-100 text-slate-700"}>
                           {volunteer.status.replace("_", " ").split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
                         </Badge>
-                      </TableCell>
-                      <TableCell className="text-center font-medium">{volunteer.totalPickups}</TableCell>
-                      <TableCell className="text-right">
+                      </TableCell><TableCell className="text-center font-medium">{volunteer.totalPickups}</TableCell><TableCell className="text-right">
                         <Button variant="ghost" size="icon">
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                         {/* Dropdown for actions: Edit, View Profile, Assign Task, Deactivate etc. */}
-                      </TableCell>
-                    </TableRow>
+                      </TableCell></TableRow>
                   ))}
                 </TableBody>
               </Table>

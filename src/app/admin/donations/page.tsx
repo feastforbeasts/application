@@ -66,39 +66,20 @@ export default function ManageDonationsPage() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>ID</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Food Type</TableHead>
-                    <TableHead>Qty</TableHead>
-                    <TableHead>Expires</TableHead>
-                    <TableHead>Submitted</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Assigned NGO</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
+                  <TableRow><TableHead>ID</TableHead><TableHead>User</TableHead><TableHead>Food Type</TableHead><TableHead>Qty</TableHead><TableHead>Expires</TableHead><TableHead>Submitted</TableHead><TableHead>Status</TableHead><TableHead>Assigned NGO</TableHead><TableHead className="text-right">Actions</TableHead></TableRow>
                 </TableHeader>
                 <TableBody>
                   {mockAdminDonations.map((donation) => (
-                    <TableRow key={donation.id} className="hover:bg-muted/50">
-                      <TableCell className="font-medium">
+                    <TableRow key={donation.id} className="hover:bg-muted/50"><TableCell className="font-medium">
                         <Link href={`/admin/donations/${donation.id}`} className="text-primary hover:underline">
                           {donation.id}
                         </Link>
-                      </TableCell>
-                      <TableCell>{donation.userName}</TableCell>
-                      <TableCell>{donation.foodType}</TableCell>
-                      <TableCell>{donation.quantity} {donation.quantityUnit}</TableCell>
-                      <TableCell>{donation.expiryDate}</TableCell>
-                      <TableCell>{new Date(donation.submittedAt).toLocaleDateString()}</TableCell>
-                      <TableCell>
+                      </TableCell><TableCell>{donation.userName}</TableCell><TableCell>{donation.foodType}</TableCell><TableCell>{donation.quantity} {donation.quantityUnit}</TableCell><TableCell>{donation.expiryDate}</TableCell><TableCell>{new Date(donation.submittedAt).toLocaleDateString()}</TableCell><TableCell>
                         <Badge variant="outline" className="flex items-center gap-1.5 capitalize">
                           <StatusIcon status={donation.status} />
                           {donation.status.replace("_", " ")}
                         </Badge>
-                      </TableCell>
-                      <TableCell>{donation.ngoName || 'N/A'}</TableCell>
-                      <TableCell className="text-right">
+                      </TableCell><TableCell>{donation.ngoName || 'N/A'}</TableCell><TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -129,8 +110,7 @@ export default function ManageDonationsPage() {
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
+                      </TableCell></TableRow>
                   ))}
                 </TableBody>
               </Table>

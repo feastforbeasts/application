@@ -54,28 +54,16 @@ export default function DashboardPage() {
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>ID</TableHead>
-                    <TableHead>Food Type</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                  </TableRow>
+                  <TableRow><TableHead>ID</TableHead><TableHead>Food Type</TableHead><TableHead>Quantity</TableHead><TableHead>Status</TableHead><TableHead>Date</TableHead></TableRow>
                 </TableHeader>
                 <TableBody>
                   {recentDonations.map((donation) => (
-                    <TableRow key={donation.id}>
-                      <TableCell className="font-medium">{donation.id}</TableCell>
-                      <TableCell>{donation.foodType}</TableCell>
-                      <TableCell>{donation.quantity}</TableCell>
-                      <TableCell>
+                    <TableRow key={donation.id}><TableCell className="font-medium">{donation.id}</TableCell><TableCell>{donation.foodType}</TableCell><TableCell>{donation.quantity}</TableCell><TableCell>
                         <Badge variant={donation.status === 'Delivered' ? 'default' : donation.status === 'Pending' ? 'outline' : 'secondary'}
                                className={donation.status === 'Delivered' ? 'bg-green-500/20 text-green-700' : donation.status === 'Pending' ? 'bg-yellow-500/20 text-yellow-700' : 'bg-blue-500/20 text-blue-700'}>
                           {donation.status}
                         </Badge>
-                      </TableCell>
-                      <TableCell>{donation.date}</TableCell>
-                    </TableRow>
+                      </TableCell><TableCell>{donation.date}</TableCell></TableRow>
                   ))}
                 </TableBody>
               </Table>

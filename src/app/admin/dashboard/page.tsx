@@ -1,3 +1,4 @@
+
 import { AdminShell } from "@/components/layout/admin-shell";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -59,32 +60,20 @@ export default function AdminDashboardPage() {
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>ID</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Food Type</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                  </TableRow>
+                  <TableRow><TableHead>ID</TableHead><TableHead>User</TableHead><TableHead>Food Type</TableHead><TableHead>Status</TableHead><TableHead>Date</TableHead></TableRow>
                 </TableHeader>
                 <TableBody>
                   {recentDonationRequests.map((donation) => (
-                    <TableRow key={donation.id}>
-                      <TableCell className="font-medium">
+                    <TableRow key={donation.id}><TableCell className="font-medium">
                         <Link href={`/admin/donations/${donation.id}`} className="text-primary hover:underline">
                             {donation.id}
                         </Link>
-                      </TableCell>
-                      <TableCell>{donation.user}</TableCell>
-                      <TableCell>{donation.foodType}</TableCell>
-                      <TableCell>
+                      </TableCell><TableCell>{donation.user}</TableCell><TableCell>{donation.foodType}</TableCell><TableCell>
                         <Badge variant={donation.status === 'Pending' ? 'destructive' : 'default'}
                                className={donation.status === 'Pending' ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}>
                           {donation.status}
                         </Badge>
-                      </TableCell>
-                      <TableCell>{donation.date}</TableCell>
-                    </TableRow>
+                      </TableCell><TableCell>{donation.date}</TableCell></TableRow>
                   ))}
                 </TableBody>
               </Table>

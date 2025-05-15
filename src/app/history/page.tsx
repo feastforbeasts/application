@@ -57,27 +57,15 @@ export default function HistoryPage() {
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow><TableHead>ID</TableHead>
-                      <TableHead>Food Type</TableHead>
-                      <TableHead>Quantity</TableHead>
-                      <TableHead>NGO</TableHead> {/* Added NGO Name column */}
-                      <TableHead>Status</TableHead>
-                      <TableHead>Submitted On</TableHead>
-                      <TableHead className="text-right">Actions</TableHead></TableRow>
+                    <TableRow><TableHead>ID</TableHead><TableHead>Food Type</TableHead><TableHead>Quantity</TableHead><TableHead>NGO</TableHead><TableHead>Status</TableHead><TableHead>Submitted On</TableHead><TableHead className="text-right">Actions</TableHead></TableRow>
                   </TableHeader>
                   <TableBody>
                     {donations.map((donation) => (
-                      <TableRow key={donation.id} className="hover:bg-muted/50"><TableCell className="font-medium">{donation.id}</TableCell>
-                        <TableCell>{donation.foodType}</TableCell>
-                        <TableCell>{donation.quantity} {donation.quantityUnit}</TableCell>
-                        <TableCell>{donation.ngoName || 'N/A'}</TableCell> {/* Display NGO Name */}
-                        <TableCell>
+                      <TableRow key={donation.id} className="hover:bg-muted/50"><TableCell className="font-medium">{donation.id}</TableCell><TableCell>{donation.foodType}</TableCell><TableCell>{donation.quantity} {donation.quantityUnit}</TableCell><TableCell>{donation.ngoName || 'N/A'}</TableCell><TableCell>
                           <Badge variant={getStatusBadgeVariant(donation.status)} className={`capitalize ${getStatusBadgeColors(donation.status)}`}>
                             {donation.status.replace("_", " ")}
                           </Badge>
-                        </TableCell>
-                        <TableCell>{new Date(donation.submittedAt).toLocaleDateString()}</TableCell>
-                        <TableCell className="text-right">
+                        </TableCell><TableCell>{new Date(donation.submittedAt).toLocaleDateString()}</TableCell><TableCell className="text-right">
                           <Button asChild variant="ghost" size="icon" title="View Details">
                             <Link href={`/history/${donation.id}`}>
                               <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />

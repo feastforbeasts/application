@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Compass, Truck, CheckCircle, Package, BuildingIcon } from "lucide-react";
-import Image from 'next/image';
+// Removed Image import as we are using iframe now
 
 interface TrackedDonationInfo {
   pickupLocation: string;
@@ -22,6 +22,9 @@ interface DonationTrackingCardProps {
 export function DonationTrackingCard({ donationInfo, onMakeAnotherDonation }: DonationTrackingCardProps) {
   const [eta, setEta] = useState<string>("Calculating...");
   const [distance, setDistance] = useState<string>("Calculating...");
+  const [iframeSrc, setIframeSrc] = useState<string>('');
+
+  const mapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
     // Simulate fetching ETA and distance
@@ -34,6 +37,19 @@ export function DonationTrackingCard({ donationInfo, onMakeAnotherDonation }: Do
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (mapsApiKey && donationInfo.pickupLocation && donationInfo.ngoAddress) {
+      const origin = encodeURIComponent(donationInfo.pickupLocation);
+      const destination = encodeURIComponent(donationInfo.ngoAddress);
+      setIframeSrc(
+        `https://www.google.com/maps/embed/v1/directions?key=${mapsApiKey}&origin=${origin}&destination=${destination}&mode=driving`
+      );
+    } else if (!mapsApiKey) {
+      console.error("Google Maps API Key (NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) is missing or not accessible.");
+      // UI will show a message if iframeSrc remains empty
+    }
+  }, [mapsApiKey, donationInfo.pickupLocation, donationInfo.ngoAddress]);
 
   return (
     <Card className="shadow-xl border-2 border-green-500">
@@ -84,20 +100,25 @@ export function DonationTrackingCard({ donationInfo, onMakeAnotherDonation }: Do
         </div>
 
         <div>
-          <p className="text-sm font-medium text-muted-foreground mb-2 flex items-center"><MapPin className="h-4 w-4 mr-2 text-primary" />Live Tracking (Simulated):</p>
+          <p className="text-sm font-medium text-muted-foreground mb-2 flex items-center"><MapPin className="h-4 w-4 mr-2 text-primary" />Live Tracking:</p>
           <div className="aspect-video bg-muted rounded-lg overflow-hidden shadow-inner flex items-center justify-center border">
-            <Image
-              src="https://placehold.co/600x338.png" // Roughly 16:9 aspect ratio
-              alt="Map placeholder showing a route"
-              width={600}
-              height={338}
-              className="object-cover w-full h-full"
-              data-ai-hint="map route"
-            />
+            {iframeSrc ? (
+              <iframe
+                width="100%"
+                height="100%" // Make iframe fill its container
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={iframeSrc}
+                title="Donation Route Map"
+              ></iframe>
+            ) : (
+              <p className="text-center text-red-500 p-4">
+                Map could not be loaded. Please ensure Google Maps API Key (NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) is correctly configured in your .env file and has the 'Maps Embed API' enabled.
+              </p>
+            )}
           </div>
-          <p className="text-xs text-muted-foreground mt-1 text-center">
-            In a real application, an interactive map highlighting the route would appear here.
-          </p>
         </div>
       </CardContent>
       <CardFooter className="border-t pt-6">

@@ -1,9 +1,10 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FeastForBeastsLogo } from '@/components/icons/logo';
 import Image from 'next/image';
 import { HandHeart, Users, Award } from 'lucide-react';
-import { APP_NAME } from '@/lib/constants';
+import { APP_NAME } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -40,7 +41,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button size="lg" asChild>
-                    <Link href="/donate">Donate Food Now</Link>
+                    <Link href="/donate" prefetch={true}>Donate Food Now</Link>
                   </Button>
                   <Button variant="outline" size="lg" asChild>
                     <Link href="#features">Learn More</Link>

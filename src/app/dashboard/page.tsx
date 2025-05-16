@@ -22,7 +22,7 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
           <Button asChild>
-            <Link href="/donate">
+            <Link href="/donate" prefetch={true}>
               <Gift className="mr-2 h-4 w-4" /> Make a New Donation
             </Link>
           </Button>
